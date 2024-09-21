@@ -1,5 +1,4 @@
-(ns second
-  (:require [clojure.string :as str]))
+(ns second)
 
 ;; binary tree, dict
 {:key 2
@@ -33,7 +32,7 @@
 (defn- new-from-col [col]
   (reduce insert nil col))
 
-(defn mymap-remove [tree key]
+(defn my-remove [tree key]
   (new-from-col (remove #(= % key) (in-order tree))))
 
 (defn my-map [f tree]
@@ -47,11 +46,7 @@
    (reduce f init (in-order tree)))
   ([f tree]
    (let [first-one (first (in-order tree))]
-     (foldl f first-one (mymap-remove tree first-one)))))
-
-(rest '(1 2 3))
-(pop '(1 2 3))
-(peek '(1 2 3))
+     (foldl f first-one (my-remove tree first-one)))))
 
 (defn foldr
   ([f init tree]
@@ -69,7 +64,7 @@
   ([f tree]
    (let [col (reverse (in-order tree))
          last-one (first col)]
-     (foldr f last-one (mymap-remove tree last-one)))))
+     (foldr f last-one (my-remove tree last-one)))))
 
 (comment
   (def my-tree
@@ -85,10 +80,10 @@
   ;;   :right {:key 7, :left nil, :right nil}},
   ;;  :right {:key 15, :left nil, :right nil}}
 
-  (-> (mymap-remove my-tree 7)
+  (-> (my-remove my-tree 7)
       (find 7)) ;; nil
 
-  (-> (mymap-remove my-tree 7)
+  (-> (my-remove my-tree 7)
       (find 5)) ;; nil
 
 

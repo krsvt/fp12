@@ -47,7 +47,8 @@
 (defn rec-num-pal [n]
   (rec-num-pal* (max-n n) (max-n n) 0))
 
-;; 2 модульной реализации, где явно разделена генерация последовательности, фильтрация и свёртка (должны использоваться функции reduce/fold, filter и аналогичные);
+;; 2 модульной реализации, где явно разделена генерация последовательности,
+;; фильтрация и свёртка (должны использоваться функции reduce/fold, filter и аналогичные);
 
 (defn all-possible-results-for [n]
   (for [x (range (max-n n) (max-n (dec n)) -1)
@@ -85,7 +86,8 @@
         :else
         (recur x (dec y) result)))))
 
-;; 5 работа с бесконечными списками для языков, поддерживающих ленивые коллекции или итераторы как часть языка
+;; 5 работа с бесконечными списками для языков,
+;; поддерживающих ленивые коллекции или итераторы как часть языка
 
 (defn num-pal-seq [n]
   (->> (all-possible-results-for n)
@@ -96,7 +98,7 @@
 (comment
 
   (time (rec-num-pal 3)) ;; stackoverflow
-
+  (tail-rec-num-pal 3)
   (with-out-str (time (tail-rec-num-pal 4))) ;; "\"Elapsed time: 4655.691704 msecs\"\n"
   (with-out-str (time (num-pal-modular 4))) ;; "\"Elapsed time: 4722.323622 msecs\"\n"
   (with-out-str (time (num-pal-map 4))) ;; "\"Elapsed time: 4519.871838 msecs\"\n"
