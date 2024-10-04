@@ -1,2 +1,2 @@
 repl:
-	clj -M:nrepl
+	clj -M:nrepl:build

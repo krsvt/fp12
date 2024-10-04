@@ -2,6 +2,7 @@
 
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"}
+  org.clojure/tools.cli                {:mvn/version "1.1.230"}
   cheshire/cheshire                       {:mvn/version "5.11.0"}}
 
  :aliases
@@ -12,4 +13,10 @@
                         "-Djdk.attach.allowAttachSelf"]
           :extra-paths ["test"]
           :main-opts   ["-m" "nrepl.cmdline" "--middleware"
-                        "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]}}}
+                        "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]}
+
+  :build {:deps       {io.github.clojure/tools.build {:mvn/version "0.10.5"}}
+         :ns-default build}
+
+
+  }}
