@@ -58,8 +58,7 @@
 (defn -main [& args]
   (let [{:keys [options _arguments summary errors]}
         (cli/parse-opts args cli-options)
-        opts (update options :step parse-double)
-        window (lab-math/method-window options)]
+        opts (when (:step options) (update options :step parse-double))]
 
     (cond
       errors
@@ -70,13 +69,14 @@
           (println summary))
 
       (:alg opts)
-      (doseq [batch-points (lab.io/read-batch window)]
-        (when-let [batch-points (and (seq batch-points)
-                                     (map #(lab.io/parse-csv-line %)
-                                          batch-points))]
-          (->> (lab-math/method opts batch-points @prev-points)
-               (lab.io/print-points!))
-          (reset! prev-points batch-points)))
+      (let [window (lab-math/method-window options)]
+        (doseq [batch-points (lab.io/read-batch window)]
+          (when-let [batch-points (and (seq batch-points)
+                                       (map #(lab.io/parse-csv-line %)
+                                            batch-points))]
+            (->> (lab-math/method opts batch-points @prev-points)
+                 (lab.io/print-points!))
+            (reset! prev-points batch-points))))
       :else
       (println "?"))))
 
